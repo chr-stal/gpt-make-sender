@@ -1,0 +1,31 @@
+<!-- file:///Users/christalwhitt/Developer/send-macros.html?send-macros.html?protein=70&carbs=110&fat=40&calories=1350&meal_summary=wrap,bowl,snack&date=2025-07-22&source=ChatGPT -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sending to Webhook...</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <p>Sending task to Make.com...</p>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const payload = {
+        protein: params.get("protein"),
+        carbs: params.get("carbs"),
+        fat: params.get("fat"),
+        calories: params.get("calories"),
+        meal_summary: params.get("meal_summary"),
+        date: params.get("date"),
+        source: params.get("source") || "ChatGPT"
+      };
+      fetch("https://hook.us2.make.com/ls9gjkguoeh3xy2vm7txex94ofy2szxr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(() => {
+        document.body.innerHTML = "<h2>Macros Sent!</h2>"
+      });
+    </script>
+</body>
+</html>
