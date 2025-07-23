@@ -1,0 +1,37 @@
+<!-- file:///Users/christalwhitt/Developer/send-tasj.html?task=Take+out+trash&due_date=2025-07-19&source=Test -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sending to Webhook...</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <p>Sending task to Make.com...</p>
+  <script>
+    const webhookURL = "https://hook.us2.make.com/6y7a2ae2vm914q0ccwtdq04zvsc33am8";
+    const params = new URLSearchParams(window.location.search);
+    const task = params.get("task");
+    const due = params.get("due_date");
+    const source = params.get("source"); 
+
+    if (!task) {
+      document.body.innerHTML = "❌ Missing required parameters: task is required.";
+    } else {
+      const payload = { task, due, source };
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        document.body.innerHTML = "✅ Task sent successfully!";
+      })
+      .catch((err) => {
+        document.body.innerHTML = "❌ Error sending task: " + err.message;
+      });
+    }
+  </script>
+</body>
+</html>
