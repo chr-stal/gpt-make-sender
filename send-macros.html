@@ -10,6 +10,11 @@
   <p>Sending task to Make.com...</p>
     <script>
       const params = new URLSearchParams(window.location.search);
+      const required = ["protein", "carbs", "fat", "calories", "date"];
+      if (required.some(k => !params.get(k))) {
+        document.body.innerHTML = "<h2>❌ Missing required parameters.</h2>";
+        throw new Error("Missing parameters");
+      }
       const payload = {
         protein: params.get("protein"),
         carbs: params.get("carbs"),
